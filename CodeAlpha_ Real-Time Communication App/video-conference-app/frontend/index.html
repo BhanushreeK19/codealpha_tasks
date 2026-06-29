@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in — Confera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+
+  <div class="auth-shell">
+    <!-- Brand panel -->
+    <div class="auth-brand">
+      <div class="brand-mark">
+        <span class="logo-dot">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-4v12l-6-4"/></svg>
+        </span>
+        Confera
+      </div>
+
+      <div class="brand-pitch">
+        <h1>Bring your team face to face, from anywhere.</h1>
+        <p>Crystal-clear video calls, real-time whiteboarding, and file sharing — all in one secure room built for focused, fast-moving teams.</p>
+        <div class="feature-pills">
+          <span>🔒 End-to-end encrypted media</span>
+          <span>🖊️ Live whiteboard</span>
+          <span>📁 In-call file sharing</span>
+          <span>🖥️ Screen share</span>
+        </div>
+      </div>
+
+      <div class="brand-footer">© 2026 Confera. Built for the modern distributed team.</div>
+    </div>
+
+    <!-- Form panel -->
+    <div class="auth-form-panel">
+      <div class="auth-form-box">
+        <div class="mobile-brand">
+          <span class="logo-dot"></span> Confera
+        </div>
+
+        <h2>Welcome back</h2>
+        <p class="subtitle">Sign in to join or start a meeting.</p>
+
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label for="email">Email address</label>
+            <div class="input-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+              <input type="email" id="email" autocomplete="email" placeholder="you@company.com" required />
+            </div>
+            <div class="field-error" data-error-for="email"></div>
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="input-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="password" autocomplete="current-password" placeholder="••••••••" required />
+              <button type="button" class="toggle-visibility" id="togglePassword" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div class="field-error" data-error-for="password"></div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="loginSubmitBtn" data-label="Sign in">Sign in</button>
+        </form>
+
+        <p class="auth-switch">Don't have an account? <a href="register.html">Create one</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+/* ==========================================================================
+   Confera — Auth pages (login / register)
+   ========================================================================== */
+
+.auth-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+
+@media (max-width: 880px) {
+  .auth-shell { grid-template-columns: 1fr; }
+  .auth-brand { display: none; }
+}
+
+/* ---- Left brand panel ---- */
+.auth-brand {
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(99,102,241,0.35), transparent 45%),
+    radial-gradient(circle at 80% 75%, rgba(34,211,238,0.22), transparent 45%),
+    linear-gradient(160deg, #0a0e17 0%, #0d1330 60%, #0a0e17 100%);
+  padding: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.auth-brand::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 70%);
+}
+
+.auth-brand .brand-mark {
+  position: relative;
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700; color: #fff;
+}
+.auth-brand .brand-mark .logo-dot {
+  width: 32px; height: 32px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-live));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.auth-brand .brand-pitch {
+  position: relative;
+  max-width: 460px;
+}
+.auth-brand .brand-pitch h1 {
+  color: #fff;
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.auth-brand .brand-pitch p {
+  color: rgba(255,255,255,0.65);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.auth-brand .feature-pills {
+  position: relative;
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 28px;
+}
+.auth-brand .feature-pills span {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.auth-brand .brand-footer {
+  position: relative;
+  color: rgba(255,255,255,0.4);
+  font-size: 12.5px;
+}
+
+/* ---- Right form panel ---- */
+.auth-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background: var(--color-bg);
+}
+.auth-form-box { width: 100%; max-width: 400px; }
+.auth-form-box .mobile-brand {
+  display: none;
+  align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 700; font-size: 18px;
+  margin-bottom: 28px;
+}
+@media (max-width: 880px) {
+  .auth-form-box .mobile-brand { display: flex; }
+}
+.auth-form-box .mobile-brand .logo-dot {
+  width: 28px; height: 28px; border-radius: 9px;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-live));
+}
+
+.auth-form-box h2 { font-size: 26px; margin-bottom: 6px; }
+.auth-form-box .subtitle { color: var(--color-text-secondary); font-size: 14.5px; margin-bottom: 30px; }
+
+.auth-divider {
+  display: flex; align-items: center; gap: 12px;
+  color: var(--color-text-muted); font-size: 12.5px;
+  margin: 20px 0;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ""; flex: 1; height: 1px; background: var(--color-border);
+}
+
+.auth-switch {
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-top: 24px;
+}
+.auth-switch a { color: var(--color-accent); font-weight: 600; }
+.auth-switch a:hover { text-decoration: underline; }
+
+.password-strength {
+  display: flex; gap: 4px; margin-top: 6px;
+}
+.password-strength i {
+  flex: 1; height: 4px; border-radius: 2px;
+  background: var(--color-border);
+  transition: background var(--duration-base) var(--ease);
+}

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meeting — Confera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/meeting.css" />
+  <style>.hidden { display: none !important; }</style>
+</head>
+<body>
+
+  <!-- ============================== LOBBY ============================== -->
+  <div id="lobbyView" class="lobby-shell">
+    <div class="lobby-card">
+      <div class="lobby-preview">
+        <video id="lobbyPreviewVideo" autoplay muted playsinline></video>
+        <div class="lobby-controls">
+          <button class="ctrl-btn" id="lobbyMicBtn" title="Toggle microphone">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4"/></svg>
+          </button>
+          <button class="ctrl-btn" id="lobbyCamBtn" title="Toggle camera">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m23 7-7 5 7 5V7Z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="lobby-info">
+        <h2 id="lobbyMeetingTitle">Loading meeting…</h2>
+        <div class="lobby-code">Code: <span class="mono" id="lobbyMeetingCode">—</span></div>
+        <div class="field-error" id="lobbyError"></div>
+        <div style="flex:1"></div>
+        <button class="btn btn-primary btn-block" id="lobbyJoinBtn" data-label="Join now">Join now</button>
+        <a href="dashboard.html" class="btn btn-ghost btn-block" style="margin-top:8px;">Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== ROOM ============================== -->
+  <div id="roomView" class="room-shell hidden">
+    <div class="room-topbar">
+      <div class="brand-mini"><span class="logo-dot"></span>Confera</div>
+      <div class="room-id">
+        <span>Code:</span> <span class="code mono" id="roomMeetingCode"></span>
+        <button class="copy-btn" id="copyCodeBtn" title="Copy meeting code">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="room-timer" id="roomTimer">00:00</div>
+    </div>
+
+    <div class="room-main" id="roomMain">
+      <div class="video-stage">
+        <div class="video-grid" id="videoGrid"></div>
+
+        <div class="whiteboard-wrap" id="whiteboardWrap" style="display:none;">
+          <div class="whiteboard-toolbar">
+            <div class="wb-tool-group">
+              <button class="wb-tool-btn active" data-tool="pen" title="Pen">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+              </button>
+              <button class="wb-tool-btn" data-tool="eraser" title="Eraser">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 21-4.3-4.3a1 1 0 0 1 0-1.4l9.6-9.6a1 1 0 0 1 1.4 0l5.6 5.6a1 1 0 0 1 0 1.4L13 19"/><path d="M22 21H7"/></svg>
+              </button>
+            </div>
+            <div class="wb-divider"></div>
+            <div class="wb-color-row">
+              <span class="wb-color-swatch selected" data-color="#1f2937" style="background:#1f2937;"></span>
+              <span class="wb-color-swatch" data-color="#ef4444" style="background:#ef4444;"></span>
+              <span class="wb-color-swatch" data-color="#3b82f6" style="background:#3b82f6;"></span>
+              <span class="wb-color-swatch" data-color="#22c55e" style="background:#22c55e;"></span>
+              <span class="wb-color-swatch" data-color="#f59e0b" style="background:#f59e0b;"></span>
+              <span class="wb-color-swatch" data-color="#8b5cf6" style="background:#8b5cf6;"></span>
+            </div>
+            <div class="wb-divider"></div>
+            <input type="range" id="wbSizeSlider" class="wb-size-slider" min="1" max="20" value="4" title="Brush size" />
+            <div class="wb-divider"></div>
+            <button class="wb-tool-btn" id="wbClearBtn" title="Clear board">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+            </button>
+          </div>
+          <div class="whiteboard-canvas-area">
+            <canvas id="whiteboardCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side-panel" id="sidePanel">
+        <div class="side-panel-header">
+          <strong id="panelTitle">Chat</strong>
+          <button id="closePanelBtn" title="Close panel">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div class="panel-body" style="padding:0; display:flex; flex-direction:column;">
+          <div class="panel-pane active" id="chatPane">
+            <div class="chat-messages" id="chatMessages" style="padding:16px;"></div>
+            <div class="chat-input-row">
+              <input type="text" id="chatInput" placeholder="Type a message…" autocomplete="off" />
+              <button class="chat-send-btn" id="chatSendBtn" title="Send">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="panel-pane" id="participantsPane" style="padding:16px;">
+            <div id="participantsList"></div>
+          </div>
+
+          <div class="panel-pane" id="filesPane" style="padding:16px;">
+            <div class="file-drop-zone" id="fileDropZone">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="margin:0 auto 8px;"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
+              <div>Drag files here or click to upload</div>
+              <div class="field-hint">Max 50MB per file</div>
+              <input type="file" id="fileInput" class="hidden" multiple />
+            </div>
+            <div id="filesList"></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="control-bar">
+      <div class="control-bar-left">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        <span id="participantsCount">1</span>
+      </div>
+
+      <button class="ctrl-btn" id="micBtn" title="Mute / unmute">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4"/></svg>
+        <span class="ctrl-label">Mute</span>
+      </button>
+      <button class="ctrl-btn" id="camBtn" title="Camera on / off">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m23 7-7 5 7 5V7Z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        <span class="ctrl-label">Camera</span>
+      </button>
+      <button class="ctrl-btn" id="screenShareBtn" title="Share your screen">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <span class="ctrl-label">Share</span>
+      </button>
+      <button class="ctrl-btn" id="whiteboardBtn" title="Toggle whiteboard">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/><path d="m7 11 3-3 2 2 4-4" /></svg>
+        <span class="ctrl-label">Board</span>
+      </button>
+
+      <div class="control-bar-right">
+        <button class="ctrl-btn" id="chatToggleBtn" data-tab="chat" title="Chat">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span class="ctrl-badge" id="chatBadge"></span>
+        </button>
+        <button class="ctrl-btn" id="participantsToggleBtn" data-tab="participants" title="Participants">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </button>
+        <button class="ctrl-btn" id="filesToggleBtn" data-tab="files" title="Files">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          <span class="ctrl-badge" id="filesBadge"></span>
+        </button>
+        <button class="ctrl-btn leave-btn" id="leaveBtn" title="Leave meeting">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a1 1 0 0 1 1-.24 11.36 11.36 0 0 0 3.58.57 1 1 0 0 1 1 1V19a1 1 0 0 1-1 1A17 17 0 0 1 3 3a1 1 0 0 1 1-1h2.94a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.58 1 1 0 0 1-.24 1Z"/><path d="m2 2 20 20"/></svg>
+          Leave
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+
+  <!-- STOMP over WebSocket client libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7/bundles/stomp.umd.min.js"></script>
+
+  <script src="js/websocket.js"></script>
+  <script src="js/webrtc.js"></script>
+  <script src="js/whiteboard.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/fileshare.js"></script>
+  <script src="js/meeting.js"></script>
+</body>
+</html>

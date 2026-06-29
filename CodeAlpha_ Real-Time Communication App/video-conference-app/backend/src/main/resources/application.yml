@@ -1,0 +1,59 @@
+server:
+  port: 8080
+  # ---------------------------------------------------------------------
+  # HTTPS / TLS — disabled by default for local dev (run behind a reverse
+  # proxy such as Nginx in production, or uncomment + supply a keystore).
+  # ---------------------------------------------------------------------
+  # ssl:
+  #   enabled: true
+  #   key-store: classpath:keystore.p12
+  #   key-store-password: ${SSL_KEYSTORE_PASSWORD}
+  #   key-store-type: PKCS12
+  #   key-alias: vconf
+
+spring:
+  application:
+    name: vconf-backend
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:vconf_db}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:your_mysql_password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 60MB
+
+app:
+  jwt:
+    # In production this MUST be supplied via environment variable / secrets manager.
+    secret: ${JWT_SECRET:c29tZS12ZXJ5LWxvbmctYW5kLXNlY3VyZS1zZWNyZXQta2V5LWZvci1qd3Qtc2lnbmluZy0yMDI2}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}        # 24h access token
+    refresh-expiration-ms: ${JWT_REFRESH_EXPIRATION_MS:604800000}  # 7d refresh token
+
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5500,http://127.0.0.1:5500,http://localhost:3000,http://localhost:8081,http://127.0.0.1:8081,http://localhost:8000,http://127.0.0.1:8000}
+    
+  file-storage:
+    upload-dir: ${FILE_UPLOAD_DIR:./uploads}
+    max-file-size-mb: 50
+
+  frontend-url: ${FRONTEND_URL:http://localhost:5500}
+
+logging:
+  level:
+    com.vconf: INFO
+    org.springframework.security: WARN

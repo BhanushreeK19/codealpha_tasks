@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SocialSphere</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>" />
+</head>
+<body>
+
+<!-- APP LAYOUT -->
+<div class="app-layout" id="appLayout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <a href="/feed" class="sidebar-logo" onclick="navigate('feed',event)">
+      <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="22" fill="var(--color-primary-light)"/>
+        <path d="M16 24C16 19.58 19.58 16 24 16s8 3.58 8 8-3.58 8-8 8-8-3.58-8-8z" fill="var(--color-primary)"/>
+        <path d="M8 36c0-4.42 3.58-8 8-8h16c4.42 0 8 3.58 8 8" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      SocialSphere
+    </a>
+
+    <nav class="nav-menu">
+      <a href="/feed" class="nav-link" id="nav-feed" onclick="navigate('feed',event)">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        Home
+      </a>
+      <a href="/explore" class="nav-link" id="nav-explore" onclick="navigate('explore',event)">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        Explore
+      </a>
+      <a href="/search" class="nav-link" id="nav-search" onclick="navigate('search',event)">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        People
+      </a>
+      <a href="#" class="nav-link" id="nav-profile" onclick="navigateToMyProfile(event)">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        Profile
+      </a>
+      <a href="/settings" class="nav-link" id="nav-settings" onclick="navigate('settings',event)">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    <div style="margin-top:auto;padding-top:1rem;border-top:1px solid var(--color-border);">
+      <div class="sidebar-user" id="sidebarUser" onclick="navigateToMyProfile(event)">
+        <div class="avatar avatar-sm avatar-placeholder" id="sidebarAvatarWrap" style="font-size:0.85rem;width:36px;height:36px;"></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebarName">Loading...</div>
+          <div class="sidebar-user-handle" id="sidebarHandle"></div>
+        </div>
+      </div>
+      <button onclick="handleLogout()" class="btn btn-ghost btn-block" style="margin-top:0.5rem;font-size:0.85rem;">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <div class="content-header" id="contentHeader">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <h2 id="pageTitle">Home</h2>
+        <!--<button class="dark-toggle" onclick="toggleDarkMode()" id="darkToggle">
+          <svg id="darkIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <span id="darkLabel">Dark</span>
+        </button>-->
+      </div>
+    </div>
+
+    <div class="content-body" id="contentBody">
+      <div class="loading-center"><div class="spinner"></div></div>
+    </div>
+  </main>
+
+  <!-- RIGHT PANEL -->
+  <aside class="right-panel" id="rightPanel">
+    <!-- Filled dynamically -->
+  </aside>
+</div>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav">
+  <div class="mobile-nav-items">
+    <a href="/feed" class="mobile-nav-item" id="mnav-feed" onclick="navigate('feed',event)">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      Home
+    </a>
+    <a href="/explore" class="mobile-nav-item" id="mnav-explore" onclick="navigate('explore',event)">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      Explore
+    </a>
+    <a href="/search" class="mobile-nav-item" id="mnav-search" onclick="navigate('search',event)">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      People
+    </a>
+    <a href="#" class="mobile-nav-item" id="mnav-profile" onclick="navigateToMyProfile(event)">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      Profile
+    </a>
+    <a href="/settings" class="mobile-nav-item" id="mnav-settings" onclick="navigate('settings',event)">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      Settings
+    </a>
+  </div>
+</nav>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- MODAL: Edit Post -->
+<div class="modal-overlay" id="editPostModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Edit Post</h3>
+      <button class="modal-close" onclick="closeModal('editPostModal')">✕</button>
+    </div>
+    <textarea id="editPostContent" class="form-input" rows="4" placeholder="What's on your mind?" style="margin-bottom:1rem;"></textarea>
+    <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+      <button class="btn btn-ghost" onclick="closeModal('editPostModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditPost()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Edit Profile -->
+<div class="modal-overlay" id="editProfileModal">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header">
+      <h3 class="modal-title">Edit Profile</h3>
+      <button class="modal-close" onclick="closeModal('editProfileModal')">✕</button>
+    </div>
+    <div id="editProfileContent"></div>
+  </div>
+</div>
+
+<!-- MODAL: Confirm Delete -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal" style="max-width:360px;">
+    <div class="modal-header">
+      <h3 class="modal-title" id="confirmTitle">Confirm</h3>
+      <button class="modal-close" onclick="closeModal('confirmModal')">✕</button>
+    </div>
+
+
+
+    <p id="confirmMsg" style="color:var(--color-text-secondary);margin-bottom:1.5rem;font-size:0.95rem;"></p>
+    <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+      <button class="btn btn-ghost" onclick="closeModal('confirmModal')">Cancel</button>
+      <button class="btn btn-danger" id="confirmActionBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="userListModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeUserList()">&times;</span>
+
+        <h3 id="userListTitle"></h3>
+
+        <div id="userListContainer"></div>
+    </div>
+</div>
+
+
+
+<script src="/js/app.js"></script>
+</body>
+</html>

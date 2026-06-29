@@ -1,0 +1,28 @@
+version: "3.8"
+
+# Quick local MySQL instance for development.
+# Run:  docker compose up -d
+# Then point backend/src/main/resources/application.yml (or env vars) at it —
+# the defaults already match this file.
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: pmtool-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: your_mysql_password
+      MYSQL_DATABASE: pmtool_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - pmtool_mysql_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pyour_mysql_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pmtool_mysql_data:

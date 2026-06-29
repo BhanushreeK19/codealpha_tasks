@@ -1,0 +1,30 @@
+# --- Backend (Java / Maven) ---
+backend/target/
+backend/.mvn/
+backend/*.iml
+*.class
+*.jar
+*.war
+
+# --- IDE ---
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# --- Environment ---
+.env
+*.env.local
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Frontend (none needed for vanilla HTML/CSS/JS, kept for safety) ---
+frontend/node_modules/

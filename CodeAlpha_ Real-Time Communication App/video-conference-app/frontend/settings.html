@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings — Confera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-mark">
+        <span class="logo-dot">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-4v12l-6-4"/></svg>
+        </span>
+        Confera
+      </div>
+
+      <div class="nav-section-label">Menu</div>
+      <a href="dashboard.html" class="nav-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a href="profile.html" class="nav-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+        Profile
+      </a>
+      <a href="settings.html" class="nav-link active">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+        Settings
+      </a>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar js-user-initials" style="width:36px;height:36px;font-size:14px;"></div>
+          <div class="meta">
+            <div class="name js-user-name"></div>
+            <div class="email js-user-email"></div>
+          </div>
+        </div>
+        <a href="#" class="nav-link js-logout" style="margin-top:6px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
+          Sign out
+        </a>
+      </div>
+    </aside>
+
+    <div>
+      <header class="topbar">
+        <h1>Settings</h1>
+        <div class="topbar-actions">
+          <button class="theme-toggle" aria-label="Toggle theme">
+            <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="page-content" style="max-width:760px;">
+
+        <div class="section-card">
+          <h3>Audio & video devices</h3>
+          <p class="section-desc">These defaults are used the next time you join a meeting.</p>
+          <div class="field">
+            <label for="cameraSelect">Camera</label>
+            <div class="input-wrap"><select id="cameraSelect" style="width:100%; padding:12px 0; background:none; border:none; color:inherit;"></select></div>
+          </div>
+          <div class="field">
+            <label for="micSelect">Microphone</label>
+            <div class="input-wrap"><select id="micSelect" style="width:100%; padding:12px 0; background:none; border:none; color:inherit;"></select></div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <h3>Meeting preferences</h3>
+          <div class="settings-row">
+            <div><div class="settings-label">Mirror my video</div><div class="settings-sub">Show your own camera preview flipped, like a mirror</div></div>
+            <label class="switch"><input type="checkbox" id="mirrorToggle" /><span class="track"></span><span class="thumb"></span></label>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">Play sound when someone joins</div></div>
+            <label class="switch"><input type="checkbox" id="soundToggle" /><span class="track"></span><span class="thumb"></span></label>
+          </div>
+          <div class="settings-row">
+            <div><div class="settings-label">Desktop notifications</div><div class="settings-sub">Get notified about meeting invites and chat mentions</div></div>
+            <label class="switch"><input type="checkbox" id="notifToggle" /><span class="track"></span><span class="thumb"></span></label>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <h3>Appearance</h3>
+          <div class="settings-row">
+            <div><div class="settings-label">Dark mode</div><div class="settings-sub">Toggle the app's color theme</div></div>
+            <button class="theme-toggle" aria-label="Toggle theme">
+              <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+              <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="section-card" style="border-color: var(--color-danger);">
+          <h3 style="color:var(--color-danger);">Danger zone</h3>
+          <div class="settings-row">
+            <div><div class="settings-label">Sign out of this device</div><div class="settings-sub">You'll need to sign in again to access your meetings</div></div>
+            <button class="btn btn-danger btn-sm" id="logoutEverywhereBtn">Sign out</button>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

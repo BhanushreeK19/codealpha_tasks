@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project — PM Tool</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div class="brand-name">PM Tool</div>
+      </div>
+
+      <a class="nav-link" href="dashboard.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+        Dashboard
+      </a>
+
+      <div class="sidebar-section-label">Projects</div>
+      <div id="sidebar-projects">
+        <div class="skeleton" style="height:32px;margin:4px 0;"></div>
+      </div>
+
+      <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--border);">
+        <button class="nav-link btn-block" id="logout-btn" style="width:100%;border:none;text-align:left;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          Log out
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+          <button class="icon-btn menu-toggle" id="menu-toggle"  title="Open menu" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+          <span class="project-key-badge" id="project-key-badge" style="font-size:13px;"></span>
+          <div style="min-width:0;">
+            <h1 id="project-title" style="font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Loading…</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-btn" id="theme-toggle"  title="Toggle theme"  aria-label="Toggle theme" ></button>
+          <div class="dropdown-wrap">
+            <button class="icon-btn notif-btn" id="notif-btn"  title="Notifications"  aria-label="Notifications" >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+              <span class="notif-dot" id="notif-dot" style="display:none;"></span>
+            </button>
+            <div class="notif-panel" id="notif-panel" style="display:none;">
+              <div class="notif-panel-header">
+                <span>Notifications</span>
+                <button class="btn btn-ghost btn-sm mark-all-read">Mark all read</button>
+              </div>
+              <div id="notif-list"></div>
+            </div>
+          </div>
+          <span id="current-user-badge" style="display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;"></span>
+          <button class="btn btn-secondary" id="invite-btn">Invite</button>
+          <!--<button class="btn btn-secondary icon-btn" id="settings-btn" title="Project settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 005 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09c0 .68.39 1.27 1 1.51.59.24 1.27.14 1.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06c-.47.47-.57 1.15-.33 1.82.24.61.83 1 1.51 1H21a2 2 0 010 4h-.09c-.68 0-1.27.39-1.51 1z"/></svg>
+          </button>-->
+          <button class="project-menu-btn" id="settings-btn" title="Project options">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+
+      <p id="project-description" style="color:var(--text-secondary);font-size:13.5px;margin:-10px 0 18px;max-width:760px;"></p>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="board">Board</button>
+        <button class="tab-btn" data-tab="members">Members</button>
+        <button class="tab-btn" data-tab="activity">Activity</button>
+      </div>
+
+      <div class="tab-panel" id="tab-board">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div id="board-tabs" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+        </div>
+        <div class="board-wrap">
+          <div class="board-columns" id="board-columns">
+            <div class="skeleton" style="height:300px;width:300px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-members" style="display:none;">
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start;">
+          <div class="card">
+            <h2 style="font-size:16px;margin-bottom:14px;">Team Members</h2>
+            <div id="members-list"></div>
+          </div>
+          <div class="card" id="invite-section">
+            <h2 style="font-size:16px;margin-bottom:14px;">Invite a teammate</h2>
+            <form id="invite-form">
+              <div class="field" style="position:relative;">
+                <label for="invite-username">Username or email</label>
+                <input type="text" id="invite-username" name="usernameOrEmail" placeholder="grace or grace@example.com" required autocomplete="off">
+                <div id="invite-suggestions" style="position:absolute;left:0;right:0;top:100%;z-index:10;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;"></div>
+              </div>
+              <div class="field">
+                <label for="invite-role">Role</label>
+                <select id="invite-role" name="projectRole">
+                  <option value="MEMBER">Member</option>
+                  <option value="MANAGER">Manager</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Send invite</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-activity" style="display:none;">
+        <div class="card" style="max-width:700px;">
+          <h2 style="font-size:16px;margin-bottom:14px;">Project Activity</h2>
+          <div id="project-activity-list" class="activity-list"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Create Task Modal -->
+  <div class="modal-backdrop" id="create-task-modal" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="create-task-modal-title">New task</h2>
+        <button class="icon-btn" data-close title="Close" aria-label="Close">✕</button>
+      </div>
+      <form id="create-task-form">
+        <div class="modal-body">
+          <div class="field">
+            <label for="ct-title">Title</label>
+            <input type="text" id="ct-title" name="title" placeholder="Set up CI pipeline" required>
+          </div>
+          <div class="field">
+            <label for="ct-description">Description</label>
+            <textarea id="ct-description" name="description" placeholder="Add more detail (optional)"></textarea>
+          </div>
+          <div class="task-modal-meta-grid">
+            <div class="field">
+              <label for="ct-priority">Priority</label>
+              <select id="ct-priority" name="priority">
+                <option value="LOW">Low</option>
+                <option value="MEDIUM" selected>Medium</option>
+                <option value="HIGH">High</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ct-due">Due date</label>
+              <input type="date" id="ct-due" name="dueDate">
+            </div>
+          </div>
+          <div class="field">
+            <label for="ct-assignee">Assignee</label>
+            <select id="ct-assignee" name="assigneeId"></select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Create task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Task Detail Modal -->
+  <div class="modal-backdrop" id="task-modal" style="display:none;">
+    <div class="modal-card wide">
+      <div class="modal-header">
+        <span class="mono" id="task-code-label" style="color:var(--text-muted);font-size:13px;"></span>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-danger btn-sm" id="delete-task-btn">Delete</button>
+          <button class="icon-btn" data-close title="Close" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="modal-body" id="task-detail-body">
+        <input type="text" id="task-title-input" style="font-family:var(--font-display);font-size:19px;font-weight:600;border:none;background:transparent;width:100%;padding:4px 0;margin-bottom:6px;color:var(--text-primary);">
+        <textarea id="task-description-input" placeholder="Add a description…" style="width:100%;border:1px solid var(--border);background:var(--bg-card);border-radius:var(--radius-sm);padding:10px 12px;font-size:13.5px;min-height:70px;color:var(--text-primary);margin-bottom:16px;"></textarea>
+
+        <div class="task-modal-meta-grid">
+          <div class="field">
+            <label>Status</label>
+            <select id="task-status">
+              <option value="TODO">To Do</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="DONE">Done</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Priority</label>
+            <select id="task-priority">
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Due date</label>
+            <input type="date" id="task-due-date">
+          </div>
+          <div class="field">
+            <label>Assignee</label>
+            <select id="task-assignee"></select>
+          </div>
+        </div>
+        <div style="font-size:12.5px;color:var(--text-muted);margin-bottom:18px;">Reported by <span id="task-reporter-label" style="color:var(--text-secondary);font-weight:600;"></span></div>
+
+        <h3 style="font-size:14px;margin-bottom:10px;">Discussion</h3>
+        <div class="comment-thread" id="comment-thread"></div>
+        <form id="comment-form" class="comment-compose">
+          <textarea id="comment-input" placeholder="Write a comment… use @username to mention someone" rows="2"></textarea>
+          <button type="submit" class="btn btn-primary btn-sm">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Settings Modal -->
+  <div class="modal-backdrop" id="settings-modal" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Project settings</h2>
+        <button class="icon-btn" data-close title="Close" aria-label="Close">✕</button>
+      </div>
+      <form id="settings-form">
+        <div class="modal-body">
+          <div class="field">
+            <label for="settings-name">Project name</label>
+            <input type="text" id="settings-name" name="name" required>
+          </div>
+          <div class="field">
+            <label for="settings-description">Description</label>
+            <textarea id="settings-description" name="description"></textarea>
+          </div>
+          <div class="field">
+            <label for="settings-color">Color</label>
+            <input type="color" id="settings-color" name="color" style="height:40px;padding:4px;">
+          </div>
+        </div>
+        <div class="modal-footer" style="justify-content:space-between;">
+          <button type="button" class="btn btn-danger" id="delete-project-btn">Delete project</button>
+          <div style="display:flex;gap:10px;">
+            <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+  <script src="js/websocket.js"></script>
+  <script src="js/shell.js"></script>
+  <script src="js/project.js"></script>
+</body>
+</html>

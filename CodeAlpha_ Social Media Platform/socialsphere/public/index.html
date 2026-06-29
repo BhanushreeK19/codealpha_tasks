@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SocialSphere – Connect, Share, Discover</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>" />
+</head>
+
+<body>
+  <div class="auth-page" id="authPage">
+    <!-- Hero -->
+    <div class="auth-hero">
+      <div class="auth-hero-content">
+        <div class="auth-logo">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="22" fill="rgba(255,255,255,0.2)"/>
+            <path d="M16 24C16 19.58 19.58 16 24 16s8 3.58 8 8-3.58 8-8 8-8-3.58-8-8z" fill="white"/>
+            <path d="M8 36c0-4.42 3.58-8 8-8h16c4.42 0 8 3.58 8 8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          SocialSphere
+        </div>
+        <h2>Connect with the people that matter most</h2>
+        <p>Share moments, discover stories, and build meaningful connections in your own space.</p>
+        <div class="auth-features">
+          <div class="auth-feature"><div class="auth-feature-icon">✍️</div> Share posts, thoughts & photos</div>
+          <div class="auth-feature"><div class="auth-feature-icon">❤️</div> Like, comment & engage</div>
+          <div class="auth-feature"><div class="auth-feature-icon">👥</div> Follow people you admire</div>
+          <div class="auth-feature"><div class="auth-feature-icon">🔍</div> Discover new creators</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auth Panel -->
+    <div class="auth-panel">
+      <div class="auth-box">
+        <!-- Login Form -->
+        <div id="loginForm">
+          <h1>Welcome back</h1>
+          <p class="auth-sub">Sign in to your SocialSphere account</p>
+
+          <div id="loginAlert" style="display:none;padding:0.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:0.88rem;"></div>
+
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" id="loginEmail" class="form-input" placeholder="you@example.com" autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" autocomplete="current-password" />
+          </div>
+
+          <button class="btn btn-primary btn-block btn-lg" id="loginBtn" onclick="handleLogin()">
+            <span id="loginBtnText">Sign In</span>
+          </button>
+
+          <div class="auth-switch">
+            Don't have an account? <a href="#" onclick="showRegister()">Create one</a>
+          </div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerForm" style="display:none;">
+          <h1>Join SocialSphere</h1>
+          <p class="auth-sub">Create your free account today</p>
+
+          <div id="registerAlert" style="display:none;padding:0.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:0.88rem;"></div>
+
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="regName" class="form-input" placeholder="Your full name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" id="regUsername" class="form-input" placeholder="cool_username" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="you@example.com" autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="regPassword" class="form-input" placeholder="Min 6 characters" autocomplete="new-password" />
+          </div>
+
+          <button class="btn btn-primary btn-block btn-lg" id="registerBtn" onclick="handleRegister()">
+            <span id="registerBtnText">Create Account</span>
+          </button>
+
+          <div class="auth-switch">
+            Already have an account? <a href="#" onclick="showLogin()">Sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showRegister() {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('registerForm').style.display = 'block';
+    }
+
+    function showLogin() {
+      document.getElementById('registerForm').style.display = 'none';
+      document.getElementById('loginForm').style.display = 'block';
+    }
+
+    function showAlert(id, message, type) {
+      const el = document.getElementById(id);
+      el.textContent = message;
+      el.style.display = 'block';
+      el.style.background = type === 'error' ? '#fef2f2' : '#f0fdf4';
+      el.style.color = type === 'error' ? '#dc2626' : '#16a34a';
+      el.style.border = `1px solid ${type === 'error' ? '#fecaca' : '#bbf7d0'}`;
+    }
+
+    async function handleLogin() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const btn = document.getElementById('loginBtn');
+      const btnText = document.getElementById('loginBtnText');
+
+      if (!email || !password) { showAlert('loginAlert', 'Please fill in all fields', 'error'); return; }
+
+      btn.disabled = true;
+      btnText.textContent = 'Signing in...';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (data.success) { window.location.href = data.redirect; }
+        else { showAlert('loginAlert', data.message, 'error'); btn.disabled = false; btnText.textContent = 'Sign In'; }
+      } catch (e) { showAlert('loginAlert', 'Network error. Please try again.', 'error'); btn.disabled = false; btnText.textContent = 'Sign In'; }
+    }
+
+    async function handleRegister() {
+      const full_name = document.getElementById('regName').value.trim();
+      const username = document.getElementById('regUsername').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const btn = document.getElementById('registerBtn');
+      const btnText = document.getElementById('registerBtnText');
+
+      if (!username || !email || !password) { showAlert('registerAlert', 'Please fill in all required fields', 'error'); return; }
+
+      btn.disabled = true;
+      btnText.textContent = 'Creating account...';
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ full_name, username, email, password })
+        });
+        const data = await res.json();
+        if (data.success) { window.location.href = data.redirect; }
+        else { showAlert('registerAlert', data.message, 'error'); btn.disabled = false; btnText.textContent = 'Create Account'; }
+      } catch (e) { showAlert('registerAlert', 'Network error. Please try again.', 'error'); btn.disabled = false; btnText.textContent = 'Create Account'; }
+    }
+
+    // Enter key support
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        if (document.getElementById('loginForm').style.display !== 'none') handleLogin();
+        else handleRegister();
+      }
+    });
+
+    // Check if URL has register param
+    if (window.location.pathname === '/register') showRegister();
+  </script>
+</body>
+</html>

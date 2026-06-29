@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — PM Tool</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div class="brand-name">PM Tool</div>
+      </div>
+
+      <a class="nav-link active" href="dashboard.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+        Dashboard
+      </a>
+
+      <div class="sidebar-section-label">Projects</div>
+      <div id="sidebar-projects">
+        <div class="skeleton" style="height:32px;margin:4px 0;"></div>
+        <div class="skeleton" style="height:32px;margin:4px 0;"></div>
+      </div>
+
+      <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--border);">
+        <button class="nav-link btn-block" id="logout-btn" style="width:100%;border:none;text-align:left;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          Log out
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <button class="icon-btn menu-toggle" id="menu-toggle"  title="Open menu"  aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+          <h1>Dashboard</h1>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-btn" id="theme-toggle"  title="Toggle theme"  aria-label="Toggle theme"></button>
+          <div class="dropdown-wrap">
+            <button class="icon-btn notif-btn" id="notif-btn" title="Notifications"  aria-label="Notifications">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+              <span class="notif-dot" id="notif-dot" style="display:none;"></span>
+            </button>
+            <div class="notif-panel" id="notif-panel" style="display:none;">
+              <div class="notif-panel-header">
+                <span>Notifications</span>
+                <button class="btn btn-ghost btn-sm mark-all-read">Mark all read</button>
+              </div>
+              <div id="notif-list"></div>
+            </div>
+          </div>
+          <span id="current-user-badge" style="display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;"></span>
+          <button class="btn btn-primary" id="new-project-btn">+ New Project</button>
+        </div>
+      </div>
+
+      <div id="dashboard-root">
+        <div id="stat-grid" class="stat-grid">
+          <div class="skeleton" style="height:80px;"></div>
+          <div class="skeleton" style="height:80px;"></div>
+          <div class="skeleton" style="height:80px;"></div>
+        </div>
+
+        <h2 style="font-size:16px;margin-bottom:14px;">Your Projects</h2>
+        <div id="project-grid" class="project-grid" style="margin-bottom:32px;">
+          <div class="skeleton" style="height:160px;"></div>
+          <div class="skeleton" style="height:160px;"></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:start;">
+          <div class="card">
+            <h2 style="font-size:16px;margin-bottom:14px;">Assigned to You</h2>
+            <div id="assigned-tasks-list"></div>
+          </div>
+          <div class="card">
+            <h2 style="font-size:16px;margin-bottom:14px;">Recent Activity</h2>
+            <div id="activity-list" class="activity-list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Create Project Modal -->
+  <div class="modal-backdrop" id="create-project-modal" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Create a new project</h2>
+        <button class="icon-btn" data-close >✕</button>
+      </div>
+      <form id="create-project-form">
+        <div class="modal-body">
+          <div class="field">
+            <label for="np-name">Project name</label>
+            <input type="text" id="np-name" name="name" placeholder="Marketing Website Relaunch" required>
+          </div>
+          <div class="field">
+            <label for="np-description">Description</label>
+            <textarea id="np-description" name="description" placeholder="What's this project about?"></textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div class="field">
+              <label for="np-key">Project key</label>
+              <input type="text" id="np-key" name="projectKey" placeholder="MWR" maxlength="10" required style="text-transform:uppercase;font-family:var(--font-mono)">
+              <div class="field-hint">Used as a prefix for task codes, e.g. MWR-1</div>
+            </div>
+            <div class="field">
+              <label for="np-color">Color</label>
+              <input type="color" id="np-color" name="color" value="#6366F1" style="height:40px;padding:4px;">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Create project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+  <script src="js/websocket.js"></script>
+  <script src="js/shell.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
